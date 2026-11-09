@@ -1,0 +1,156 @@
+version: 2
+
+models:
+  - name: dim_date
+    description: "DimDate - one row per calendar date in 2022."
+    columns:
+      - name: date_key
+        data_tests:
+          - not_null
+          - unique
+      - name: calendar_date
+        data_tests:
+          - not_null
+          - unique
+
+  - name: dim_city
+    description: "DimCity - one row per normalized city."
+    columns:
+      - name: city_key
+        data_tests:
+          - not_null
+          - unique
+      - name: city_code
+        data_tests:
+          - not_null
+          - unique
+
+  - name: dim_courier
+    description: "Courier IDs are scoped by process and city; no assumed identity across P/D."
+    columns:
+      - name: courier_key
+        data_tests:
+          - not_null
+          - unique
+
+  - name: dim_region
+    description: "Region IDs are scoped by process and city."
+    columns:
+      - name: region_key
+        data_tests:
+          - not_null
+          - unique
+
+  - name: dim_aoi
+    description: "AOI IDs scoped by process and city; no fixed AOI-to-region hierarchy."
+    columns:
+      - name: aoi_key
+        data_tests:
+          - not_null
+          - unique
+      - name: aoi_type_variant_count
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: [0, 1]
+                quote: false
+
+  - name: fact_pickup
+    description: "One row per source-scoped Pickup task."
+    columns:
+      - name: task_key
+        data_tests:
+          - not_null
+          - unique
+      - name: city_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_city')
+                field: city_key
+      - name: accepted_date_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_date')
+                field: date_key
+      - name: completed_date_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_date')
+                field: date_key
+      - name: courier_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_courier')
+                field: courier_key
+      - name: region_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_region')
+                field: region_key
+
+      - name: aoi_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_aoi')
+                field: aoi_key
+  - name: fact_delivery
+    description: "One row per source-scoped Delivery task."
+    columns:
+      - name: task_key
+        data_tests:
+          - not_null
+          - unique
+      - name: city_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_city')
+                field: city_key
+      - name: accepted_date_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_date')
+                field: date_key
+      - name: completed_date_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_date')
+                field: date_key
+      - name: courier_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_courier')
+                field: courier_key
+      - name: region_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_region')
+                field: region_key
+      - name: aoi_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_aoi')
+                field: aoi_key

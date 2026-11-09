@@ -1,0 +1,17 @@
+name: 'express_courier_dw'
+version: '1.0.0'
+config-version: 2
+
+profile: 'express_courier_dw'
+
+model-paths: ['models']
+macro-paths: ['macros']
+
+models:
+  express_courier_dw:
+    staging:
+      +materialized: table
+      +schema: stg
+    marts:
+      +materialized: table
+      +schema: dw

@@ -1,0 +1,35 @@
+# Python
+.venv/
+.venv-dbt/
+__pycache__/
+*.pyc
+
+# Source data and Power BI exports
+data/
+bi/snapshots/
+
+# dbt local configuration and generated files
+dbt/profiles.yml
+dbt/target/
+dbt/logs/
+dbt/dbt_packages/
+
+# Runtime logs
+logs/
+*.log
+
+# Secrets
+.env
+.env.*
+*.pem
+*.p8
+*.key
+
+# SQL Server
+*.bak
+*.mdf
+*.ldf
+
+# Power BI local cache
+**/.pbi/localSettings.json
+**/.pbi/cache.abf

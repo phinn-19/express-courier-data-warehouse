@@ -1,0 +1,42 @@
+version: 2
+
+models:
+  - name: stg_pickup_tasks
+    description: "Silver layer for LaDe Pickup tasks."
+    columns:
+      - name: source_order_id
+        data_tests:
+          - not_null
+          - unique
+
+      - name: quality_status
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['VALID', 'REVIEW', 'INVALID']
+
+      - name: window_status
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['EARLY', 'WITHIN', 'LATE', 'UNKNOWN', 'INVALID_WINDOW']
+
+  - name: stg_delivery_tasks
+    description: "Silver layer for LaDe Delivery tasks."
+    columns:
+      - name: source_order_id
+        data_tests:
+          - not_null
+          - unique
+
+      - name: quality_status
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['VALID', 'REVIEW', 'INVALID']
+
+      - name: gps_status
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['PRESENT', 'MISSING_GPS']

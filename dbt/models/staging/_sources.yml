@@ -1,0 +1,9 @@
+version: 2
+
+sources:
+  - name: lade_raw
+    database: ExpressCourierDW
+    schema: raw
+    tables:
+      - name: PickupTasks
+      - name: DeliveryTasks
