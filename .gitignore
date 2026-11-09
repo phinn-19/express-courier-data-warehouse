@@ -13,6 +13,8 @@ dbt/profiles.yml
 dbt/target/
 dbt/logs/
 dbt/dbt_packages/
+.user.yml
+dbt/.user.yml
 
 # Runtime logs
 logs/
