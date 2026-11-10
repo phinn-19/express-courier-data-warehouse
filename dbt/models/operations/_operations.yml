@@ -1,0 +1,28 @@
+version: 2
+
+models:
+  - name: mart_daily_operations
+    description: >
+      One row per completed date and city. Pickup and Delivery are first
+      aggregated separately; never joined by source order_id.
+    columns:
+      - name: date_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_date')
+                field: date_key
+      - name: city_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_city')
+                field: city_key
+      - name: pickup_tasks
+        data_tests:
+          - not_null
+      - name: delivery_tasks
+        data_tests:
+          - not_null
