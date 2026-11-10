@@ -15,3 +15,6 @@ models:
     marts:
       +materialized: table
       +schema: dw
+    operations:
+      +materialized: table
+      +schema: mart
