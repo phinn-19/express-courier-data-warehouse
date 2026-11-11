@@ -1,0 +1,45 @@
+version: 2
+
+models:
+  - name: mart_area_performance
+    description: "Area performance by process, completion date, city, region and AOI."
+
+    columns:
+      - name: process_code
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['P', 'D']
+
+      - name: date_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_date')
+                field: date_key
+
+      - name: city_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_city')
+                field: city_key
+
+      - name: region_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_region')
+                field: region_key
+
+      - name: aoi_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_aoi')
+                field: aoi_key
