@@ -1,0 +1,20 @@
+# COPY this file to dbt/profiles.yml, then edit for YOUR SQL Server instance.
+# dbt/profiles.yml is ignored by Git. DO NOT commit real connection secrets.
+# This example assumes TCP localhost:1433. SQL Server Express named instances
+# often use another/dynamic port: check instance settings and adjust server/port.
+# If your local working profiles.yml already connects successfully, keep it.
+
+express_courier_dw:
+  target: dev
+  outputs:
+    dev:
+      type: sqlserver
+      driver: 'ODBC Driver 18 for SQL Server'
+      server: 'localhost'
+      port: 1433
+      database: 'ExpressCourierDW'
+      schema: 'dbo'
+      windows_login: true
+      encrypt: true
+      trust_cert: true  # local dev with a self-signed cert ONLY
+      threads: 4
