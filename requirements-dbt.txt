@@ -1,0 +1,5 @@
+# Development baseline used by project team in Nov 2026.
+# dbt-sqlserver will pull compatible dbt dependencies.
+-r requirements.txt
+dbt-core==1.12.6
+dbt-sqlserver==1.12.2
