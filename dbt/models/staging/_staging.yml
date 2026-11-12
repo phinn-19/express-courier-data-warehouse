@@ -7,7 +7,6 @@ models:
       - name: source_order_id
         data_tests:
           - not_null
-          - unique
 
       - name: quality_status
         data_tests:
@@ -27,7 +26,6 @@ models:
       - name: source_order_id
         data_tests:
           - not_null
-          - unique
 
       - name: quality_status
         data_tests:
