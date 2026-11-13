@@ -1,0 +1,13 @@
+version: 2
+
+# Nguồn Hub SIMULATED do scripts/load_hub_batches.py nạp (HUB_DATA_CONTRACT v1.1).
+# database lấy theo target trong profiles.yml để mỗi người chạy được trên DB dev của mình.
+sources:
+  - name: hub_sim_raw
+    description: "Hub SIMULATED - kịch bản kiểm chứng mở rộng DW, không phải dữ liệu Hub thực."
+    database: "{{ target.database }}"
+    schema: sim_raw
+    tables:
+      - name: Hubs
+      - name: Shipments
+      - name: HubEvents
