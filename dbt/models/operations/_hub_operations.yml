@@ -1,0 +1,66 @@
+
+version: 2
+
+models:
+  - name: mart_hub_daily_operations
+    description: >
+      Hub simulated operations, one row per
+      calendar_date x city_key x hub_key,
+      including dates without any event.
+      Do not sum inventory across dates.
+
+    columns:
+      - name: date_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_date')
+                field: date_key
+
+      - name: calendar_date
+        data_tests: [not_null]
+
+      - name: city_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_city')
+                field: city_key
+
+      - name: hub_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_hub')
+                field: hub_key
+
+      - name: received_count
+        data_tests: [not_null]
+
+      - name: sorted_count
+        data_tests: [not_null]
+
+      - name: departed_count
+        data_tests: [not_null]
+
+      - name: departed_shipments_with_dwell
+        data_tests: [not_null]
+
+      - name: total_dwell_seconds
+        data_tests: [not_null]
+
+      - name: end_of_day_inventory
+        data_tests: [not_null]
+
+      - name: simulation_run_id
+        data_tests: [not_null]
+
+      - name: data_origin
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['SIMULATED']
