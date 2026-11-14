@@ -1,3 +1,4 @@
+{{ config(as_columnstore=false) }}
 -- Dimension ngày của DW.
 -- LaDe công bố dữ liệu trong năm 2022.
 

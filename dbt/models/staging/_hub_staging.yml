@@ -1,0 +1,67 @@
+version: 2
+
+# Tests Hub để riêng file, không sửa _staging.yml của lõi LaDe.
+models:
+  - name: stg_hub_hubs
+    description: "Silver - Hub SIMULATED, 1 dòng / hub_id."
+    columns:
+      - name: hub_id
+        data_tests: [not_null, unique]
+      - name: city_code
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['JILIN', 'YANTAI']
+      - name: data_origin
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['SIMULATED']
+
+  - name: stg_hub_shipments
+    description: "Silver - SIM Shipment, 1 dòng / sim_shipment_id; MVP 1 Pickup task -> tối đa 1 shipment."
+    columns:
+      - name: sim_shipment_id
+        data_tests: [not_null, unique]
+      - name: origin_pickup_task_key
+        data_tests: [not_null, unique]
+      - name: hub_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_hub_hubs')
+                field: hub_id
+      - name: pickup_completed_at
+        data_tests: [not_null]
+      - name: data_origin
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['SIMULATED']
+
+  - name: stg_hub_events
+    description: "Silver - Hub event SIMULATED, 1 dòng / event_id."
+    columns:
+      - name: event_id
+        data_tests: [not_null, unique]
+      - name: sim_shipment_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_hub_shipments')
+                field: sim_shipment_id
+      - name: event_type
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['HUB_RECEIVED', 'SORTING_COMPLETED', 'HUB_DEPARTED']
+      - name: event_ts
+        data_tests: [not_null]
+      - name: data_origin
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['SIMULATED']

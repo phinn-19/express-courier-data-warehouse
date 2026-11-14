@@ -1,0 +1,85 @@
+version: 2
+
+# Tests Gold cho module Hub SIMULATED, tách khỏi _gold.yml của lõi.
+models:
+  - name: dim_hub
+    description: "DimHub - Hub giả lập (SIMULATED); không gắn Region/AOI thật."
+    columns:
+      - name: hub_key
+        data_tests: [not_null, unique]
+      - name: hub_id
+        data_tests: [not_null, unique]
+      - name: city_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_city')
+                field: city_key
+      - name: data_origin
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['SIMULATED']
+
+  - name: dim_hub_event_type
+    description: "DimHubEventType - 3 loại sự kiện Hub theo contract v1.1."
+    columns:
+      - name: event_type_key
+        data_tests: [not_null, unique]
+      - name: event_type
+        data_tests: [not_null, unique]
+
+  - name: fact_hub_event
+    description: "FactHubEvent - 1 dòng / event_id; dữ liệu SIMULATED, không suy rộng thành Hub thực."
+    columns:
+      - name: event_id
+        data_tests: [not_null, unique]
+      - name: sim_shipment_id
+        data_tests: [not_null]
+      - name: origin_pickup_task_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('fact_pickup')
+                field: task_key
+      - name: city_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_city')
+                field: city_key
+      - name: hub_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_hub')
+                field: hub_key
+      - name: event_type_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_hub_event_type')
+                field: event_type_key
+      - name: event_date_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_date')
+                field: date_key
+      - name: event_count
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: [1]
+                quote: false
+      - name: data_origin
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['SIMULATED']
