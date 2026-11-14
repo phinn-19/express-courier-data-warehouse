@@ -2,7 +2,7 @@ version: 2
 
 sources:
   - name: lade_raw
-    database: ExpressCourierDW
+    database: "{{ target.database }}"
     schema: raw
     tables:
       - name: PickupTasks

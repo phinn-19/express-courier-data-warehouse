@@ -1,4 +1,4 @@
-{{ config(tags=['hub']) }}
+{{ config(tags=['hub'], as_columnstore=false) }}
 -- DimHubEventType. Danh mục tĩnh theo HUB_DATA_CONTRACT v1.1 (rules hub-rules-v1).
 -- event_sequence = thứ tự nghiệp vụ bắt buộc: nhận -> phân loại xong -> xuất.
 SELECT
